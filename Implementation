@@ -500,4 +500,34 @@ def main():
             print("No path found!")
         
         # Visualize result
-        astar.visualize_search(f"
+        astar.visualize_search(f"{name} - A* Search Result")
+        
+        # Compare heuristics on first grid
+        if i == 1:
+            heuristic_results = compare_heuristics(grid, start, goal)
+            
+            # Visualize best and worst heuristics
+            best_heuristic = min(heuristic_results.keys(), 
+                               key=lambda h: heuristic_results[h]['stats']['nodes_explored'])
+            worst_heuristic = max(heuristic_results.keys(), 
+                                key=lambda h: heuristic_results[h]['stats']['nodes_explored'])
+            
+            print(f"Best heuristic: {best_heuristic} "
+                  f"(explored {heuristic_results[best_heuristic]['stats']['nodes_explored']} nodes)")
+            print(f"Worst heuristic: {worst_heuristic} "
+                  f"(explored {heuristic_results[worst_heuristic]['stats']['nodes_explored']} nodes)")
+        
+        # Analyze diagonal movement on second grid
+        if i == 2:
+            analyze_diagonal_movement(grid, start, goal)
+    
+    # Performance benchmark
+    print("\nRunning performance benchmark...")
+    grid_sizes = [10, 15, 20, 25, 30]
+    performance_benchmark(grid_sizes, obstacle_density=0.2)
+    
+    print("\n" + "=" * 50)
+    print("A* Search Algorithm Demo Complete!")
+
+if __name__ == "__main__":
+    main()
